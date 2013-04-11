@@ -1,0 +1,29 @@
+<resources>
+
+    <style name="Theme.MyTheme" parent="@style/Theme.GreenDroid">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="gdActionBarApplicationDrawable">@drawable/logo_fw</item>
+    </style>
+
+    <style name="BottomButtonBarStyle">
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/float_bottom_button_bar</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="BottomButtonBarItemStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:padding">3dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/selector_bottom_button_bar_item</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:onClick">onClick</item>
+    </style>
+
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_actionbar"
+    style="@style/BottomButtonBarStyle"
+    android:orientation="horizontal"
+    android:visibility="gone" >
+
+    <Button
+        android:id="@+id/operation_createfolder"
+        style="@style/BottomButtonBarItemStyle"
+        android:drawableTop="@drawable/icon_action_createfolder"
+        android:text="create" />
+
+    <Button
+        android:id="@+id/operation_share"
+        style="@style/BottomButtonBarItemStyle"
+        android:drawableTop="@drawable/icon_action_share"
+        android:text="share" />
+
+    <Button
+        android:id="@+id/operation_delete"
+        style="@style/BottomButtonBarItemStyle"
+        android:drawableTop="@drawable/icon_action_delete"
+        android:text="delete" />
+
+    <Button
+        android:id="@+id/operation_move"
+        style="@style/BottomButtonBarItemStyle"
+        android:drawableTop="@drawable/icon_action_move"
+        android:text="move" />
+
+    <Button
+        android:id="@+id/operation_check"
+        style="@style/BottomButtonBarItemStyle"
+        android:drawableTop="@drawable/icon_action_edit"
+        android:text="check" />
+
+</LinearLayout>
