@@ -37,6 +37,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -290,4 +291,22 @@ public class Util {
     };
 
     public static String sZipFileMimeType = "application/zip";
+
+    public static void notifyFileSystemChanged(Context context,String path) {
+        if (path == null)
+            return;
+        final File f = new File(path);
+        final Intent intent;
+        if (f.isDirectory()) {
+            intent = new Intent(Intent.ACTION_MEDIA_MOUNTED);
+            intent.setClassName("com.android.providers.media", "com.android.providers.media.MediaScannerReceiver");
+            intent.setData(Uri.fromFile(Environment.getExternalStorageDirectory()));
+            Log.v(LOG_TAG, "directory changed, send broadcast:" + intent.toString());
+        } else {
+            intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            intent.setData(Uri.fromFile(new File(path)));
+            Log.v(LOG_TAG, "file changed, send broadcast:" + intent.toString());
+        }
+        context.sendBroadcast(intent);
+    }
 }

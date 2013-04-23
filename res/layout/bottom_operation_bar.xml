@@ -9,30 +9,30 @@
         android:id="@+id/operation_createfolder"
         style="@style/BottomButtonBarItemStyle"
         android:drawableTop="@drawable/icon_action_createfolder"
-        android:text="create" />
+        android:text="@string/operation_create" />
 
     <Button
         android:id="@+id/operation_share"
         style="@style/BottomButtonBarItemStyle"
         android:drawableTop="@drawable/icon_action_share"
-        android:text="share" />
+        android:text="@string/operation_share" />
 
     <Button
         android:id="@+id/operation_delete"
         style="@style/BottomButtonBarItemStyle"
         android:drawableTop="@drawable/icon_action_delete"
-        android:text="delete" />
+        android:text="@string/operation_delet" />
 
     <Button
         android:id="@+id/operation_move"
         style="@style/BottomButtonBarItemStyle"
         android:drawableTop="@drawable/icon_action_move"
-        android:text="move" />
+        android:text="@string/operation_move" />
 
     <Button
         android:id="@+id/operation_check"
         style="@style/BottomButtonBarItemStyle"
-        android:drawableTop="@drawable/icon_action_edit"
-        android:text="check" />
+        android:drawableTop="@drawable/icon_action_check"
+        android:text="@string/operation_check" />
 
 </LinearLayout>

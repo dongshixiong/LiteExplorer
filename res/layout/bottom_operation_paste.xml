@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_actionbar_past"
+    style="@style/BottomButtonBarStyle"
+    android:orientation="horizontal"
+    android:visibility="visible" >
+
+    <Button
+        android:id="@+id/operation_past"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="onClick"
+        android:text="@string/operation_paste" />
+
+    <Button
+        android:id="@+id/operation_cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="onClick"
+        android:text="@string/cancel" />
+
+</LinearLayout>

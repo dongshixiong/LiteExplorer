@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LiteExplorer</string>
+    <string name="app_name">文件管理器</string>
     <string name="empty_folder">空文件夹</string>
-
+    <string name="title_createfolder">新建文件夹</string>
+    <string name="hint_createfolder">文件夹名称</string>
+    <string name="defalut_nameofnewfile">新建文件夹</string>
+    <string name="title_deletefile">删除文件</string>
+    <string name="title_copyfile">复制文件</string>
+    <string name="title_movefile">移动文件</string>
+    
+    <string name="operation_create">新建</string>
+    <string name="operation_copy">复制</string>
+    <string name="operation_copying">正在复制文件</string>
+    <string name="operation_delet">删除</string>
+    <string name="operation_deleting">正在删除文件</string>
+    <string name="operation_move">移动</string>
+    <string name="operation_moving">正在移动文件</string>
+    <string name="operation_paste">粘贴</string>
+    <string name="operation_pasting">正在粘贴文件</string>
+    <string name="operation_share">分享</string>
+    <string name="operation_check">全选</string>
+    <string name="operation_uncheck">取消</string>
+    
+    <string name="dialog_select_type">选择文件类型</string>
+    <string name="dialog_type_text">文本</string>
+    <string name="dialog_type_audio">音频</string>
+    <string name="dialog_type_video">视频</string>
+    <string name="dialog_type_image">图像</string>
+	<!-- 
+    <string name="check_all">全选</string> -->
+    <string name="cancel">取消</string>
+    <string name="title_selectfile_num">选择%s个文件</string>
+	<string name="confirm">确定</string>
+    <string name="error_info_cant_send_folder">不能发送文件夹</string>
+    <string name="error_nofile_selected">请选择文件</string>
 </resources>

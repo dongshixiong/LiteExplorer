@@ -2,14 +2,11 @@ package cn.stone.android.liteexplorer;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +22,12 @@ public class FileBrowserAdapter extends BaseAdapter {
 	private List<File> mFiles;
 	private List<File> mCheckedFiles = new ArrayList<File>();
 	private LayoutInflater mInflater;
-	private CheckItem mCheckItem = CheckItem.UNCHECK;
+	private Modle modle = Modle.browserfile;
 	private FileIconHelper mFileIconHelper;
-	private Context mContext;
+	private FileBrowserActivity mContext;
 	private FileSortHelper mFileSortHelper;
-
+	private ICheckStateChangeLitener mCheckStateChangeLitener;
+	
 	private FileFilter mFileFilter = new FileFilter() {
 		@Override
 		public boolean accept(File file) {
@@ -41,8 +39,9 @@ public class FileBrowserAdapter extends BaseAdapter {
 		}
 	};
 
-	public FileBrowserAdapter(Context context) {
+	public FileBrowserAdapter(FileBrowserActivity context) {
 		mContext = context;
+		mCheckStateChangeLitener=context;
 		mInflater = LayoutInflater.from(context);
 		mFileIconHelper = new FileIconHelper(context);
 		mFileSortHelper = new FileSortHelper();
@@ -50,6 +49,10 @@ public class FileBrowserAdapter extends BaseAdapter {
 		mFileSortHelper.setSortMethog(SortMethod.name);
 	}
 
+	public void refresh(){
+		setFolder(mFolder);
+	}
+	
 	public void setFolder(File folder) {
 		if (folder.isDirectory()) {
 			mCheckedFiles.clear();
@@ -68,9 +71,9 @@ public class FileBrowserAdapter extends BaseAdapter {
 		}
 	}
 
-	public void setCheckItem(CheckItem checkItem) {
+	public void setModle(Modle mdole) {
 		mCheckedFiles.clear();
-		mCheckItem = checkItem;
+		this.modle = mdole;
 		notifyDataSetChanged();
 	}
 
@@ -80,8 +83,8 @@ public class FileBrowserAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	public CheckItem getCheckItem() {
-		return mCheckItem;
+	public Modle getModle() {
+		return modle;
 	}
 
 	public boolean isRootFolder() {
@@ -89,6 +92,25 @@ public class FileBrowserAdapter extends BaseAdapter {
 				FileBrowserActivity.ROOT_FOLDER.getPath());
 	}
 
+	public void doAllSelect(){
+		mCheckedFiles.clear();
+		mCheckedFiles.addAll(mFiles);
+		notifyDataSetChanged();
+		notifySelectChange();
+	} 
+	public void doAllUnselect(){
+		mCheckedFiles.clear();
+		notifyDataSetChanged();
+		notifySelectChange();
+	}
+
+	public List<File> getSelected(){
+		return mCheckedFiles;
+	} 
+	public boolean isAllSelected(){
+		return mCheckedFiles.size()==mFiles.size();
+	} 
+	
 	@Override
 	public int getCount() {
 		if (mFolder == null)
@@ -151,12 +173,6 @@ public class FileBrowserAdapter extends BaseAdapter {
 		} else {
 			final File file = mFiles.get(isRootFolder() ? position
 					: position - 1);
-			// if (file.isDirectory())
-			// itemView.fileIcon.setImageResource(R.drawable.icon_file_folder);
-			// else
-			// mFileIconHelper.setIcon(
-			// FileInfo.GetFileInfo(file, mFileFilter, false),
-			// itemView.fileIcon, itemView.imageFrame);
 			itemView.fileIcon.setImageResource(FileIconHelper
 					.getFileIcon(file));
 			itemView.fileName.setText(file.getName());
@@ -175,30 +191,31 @@ public class FileBrowserAdapter extends BaseAdapter {
 				itemView.modifyTime.setText(Util.formatDateString(mContext,
 						file.lastModified()));
 			}
-			switch (mCheckItem) {
-			case CHECKBOTH:
+			switch (modle) {
+			case selectboth:
 				itemView.checkState.setVisibility(View.VISIBLE);
 				break;
-			case CHECKFOLDER:
+			case selectfolder:
 				if (file.isDirectory()) {
 					itemView.checkState.setVisibility(View.VISIBLE);
 				} else {
 					itemView.checkState.setVisibility(View.INVISIBLE);
 				}
 				break;
-			case CHECKFILE:
+			case selectfile:
 				if (file.isDirectory()) {
 					itemView.checkState.setVisibility(View.INVISIBLE);
 				} else {
 					itemView.checkState.setVisibility(View.VISIBLE);
 				}
 				break;
-			default:
+			case browserfile:
+			case paste:
 				itemView.checkState.setVisibility(View.GONE);
 				break;
 			}
 
-			if (mCheckItem != CheckItem.UNCHECK) {
+			if (modle != Modle.browserfile) {
 				boolean checked = mCheckedFiles.contains(file);
 				itemView.checkState
 						.setImageResource(checked ? R.drawable.icon_checked
@@ -208,11 +225,13 @@ public class FileBrowserAdapter extends BaseAdapter {
 					@Override
 					public void onClick(View v) {
 						boolean checked = mCheckedFiles.contains(file);
+						
 						if (checked) {
 							mCheckedFiles.remove(file);
 						} else {
 							mCheckedFiles.add(file);
 						}
+						notifySelectChange();
 						((ImageView) v)
 								.setImageResource(checked ? R.drawable.icon_unchecked
 										: R.drawable.icon_checked);
@@ -234,7 +253,17 @@ public class FileBrowserAdapter extends BaseAdapter {
 		protected ImageView checkState;
 	}
 
-	public static enum CheckItem {
-		CHECKFILE, CHECKFOLDER, CHECKBOTH, UNCHECK
+	public static enum Modle {
+		selectfile, selectfolder, selectboth, browserfile,paste
+	}
+
+	private void notifySelectChange(){
+		if(mCheckStateChangeLitener!=null){
+			mCheckStateChangeLitener.onChange();
+		}
+	}
+	
+	public static interface ICheckStateChangeLitener{
+		public void onChange();
 	}
 }
